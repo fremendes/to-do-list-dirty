@@ -17,6 +17,18 @@ try {
 
 Write-Host "Construction de la version $version..." -ForegroundColor Green
 
+Write-Host "Verification du code avec Ruff..." -ForegroundColor Yellow
+
+python -m pipenv run python -m ruff check .
+$ruffExitCode = $LASTEXITCODE
+
+if ($ruffExitCode -ne 0) {
+    Write-Error "Le code ne passe pas la verification Ruff. Corrigez les erreurs avant de build."
+    exit 1
+}
+
+Write-Host "Code verifie avec succes par Ruff" -ForegroundColor Green
+
 # Mise à jour de la version dans settings.py
 Write-Host "Mise à jour de la version dans settings.py..." -ForegroundColor Yellow
 $settingsFile = "todo\settings.py"
@@ -41,6 +53,10 @@ git commit -m "chore: bump version to $version"
 # Création du tag
 Write-Host "Creation du tag v$version..." -ForegroundColor Yellow
 git tag "v$version"
+
+# Push tag
+Write-Host "Push de la version v$version..." -ForegroundColor Yellow
+git push origin "v$version"
 
 # Génération de l'archive
 $archiveName = "todo-$version.zip"
