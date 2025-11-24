@@ -1,0 +1,37 @@
+# Django
+*.sqlite3
+*.pyc
+__pycache__/
+*.log
+local_settings.py
+db.sqlite3
+
+# Environnements virtuels
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+pipenv/
+Pipfile.lock
+
+# IDE
+.vscode/
+.idea/
+.vs/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Archives de build (sauf celles générées par le script)
+*.tar.gz
+*.zip
+!todolist-*.zip
+
+# Fichiers de données de test (à garder sous contrôle)
+!dataset.json
