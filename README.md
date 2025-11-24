@@ -1,5 +1,26 @@
-# to-do-list app
-To-Do-List application built with django to Create, Update and Delete tasks.
-<br>
-<br>
-![todolist](https://user-images.githubusercontent.com/65074901/125083144-a5e03900-e0e5-11eb-9092-da716a30a5f3.JPG)
+# Todo-list App
+
+Application de gestion de tâches développée avec Django.
+
+## Stratégie de développement
+
+### 📝 Convention de commits
+
+Nous utilisons [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) :
+
+
+**Types de commits :**
+- `feat`: Nouvelle fonctionnalité
+- `fix`: Correction de bug
+- `docs`: Documentation
+- `style`: Formatage, point-virgule manquants...
+- `refactor`: Refactorisation du code
+- `test`: Ajout ou correction de tests
+- `chore`: Maintenance (build, dépendances, etc.)
+
+**Exemples :**
+```bash
+git commit -m "feat: ajout de la fonctionnalité de filtrage des tâches"
+git commit -m "fix: correction du bug de suppression des tâches"
+git commit -m "docs: mise à jour du README"
+git commit -m "chore: mise à jour vers Django 4.2"
