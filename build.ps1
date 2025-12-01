@@ -17,7 +17,49 @@ try {
 
 Write-Host "Construction de la version $version..." -ForegroundColor Green
 
-# Mise à jour de la version dans settings.py
+# 1. Vérification Ruff
+Write-Host "Verification du code avec Ruff..." -ForegroundColor Yellow
+
+python -m pipenv run python -m ruff check .
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "Le code ne passe pas la verification Ruff. Corrigez les erreurs avant de build."
+    exit 1
+}
+Write-Host "Code verifie avec succes par Ruff" -ForegroundColor Green
+
+# 2. Tests unitaires
+Write-Host "Execution des tests unitaires..." -ForegroundColor Yellow
+
+python -m pipenv run python manage.py test tasks
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "Les tests unitaires ont echoue."
+    exit 1
+}
+Write-Host "Tests unitaires passes avec succes" -ForegroundColor Green
+
+# 3. Tests multi-versions 
+Write-Host "Execution des tests multi-versions..." -ForegroundColor Yellow
+
+# Chercher le script
+$testScript = "test_multi_version.ps1"
+if (Test-Path $testScript) {
+    Write-Host "   Execution de $testScript..." -ForegroundColor Gray
+    try {
+        & ".\$testScript"
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host "Tests multi-versions passes avec succes" -ForegroundColor Green
+        } else {
+            Write-Warning "Tests multi-versions echoues (build continue)"
+        }
+    } catch {
+        Write-Warning "Erreur execution: $_"
+    }
+} else {
+    Write-Host "Script $testScript non trouve" -ForegroundColor Yellow
+    Write-Host "Fichiers disponibles:" -ForegroundColor Gray
+    Get-ChildItem -Filter "*.ps1" | ForEach-Object { Write-Host "     - $($_.Name)" -ForegroundColor Gray }
+}
+# 4. Mise à jour de la version
 Write-Host "Mise à jour de la version dans settings.py..." -ForegroundColor Yellow
 $settingsFile = "todo\settings.py"
 
@@ -30,19 +72,22 @@ if (Test-Path $settingsFile) {
     exit 1
 }
 
-# Ajout des fichiers modifiés
+
+
+# 5. Opérations Git
 Write-Host "Ajout des fichiers modifies..." -ForegroundColor Yellow
 git add todo/settings.py
 
-# Commit des changements
 Write-Host "Commit des changements..." -ForegroundColor Yellow
 git commit -m "chore: bump version to $version"
 
-# Création du tag
 Write-Host "Creation du tag v$version..." -ForegroundColor Yellow
 git tag "v$version"
 
-# Génération de l'archive
+Write-Host "Push de la version v$version..." -ForegroundColor Yellow
+git push origin "v$version"
+
+# 6. Génération de l'archive
 $archiveName = "todo-$version.zip"
 Write-Host "Generation de l'archive $archiveName..." -ForegroundColor Yellow
 git archive --format zip --output $archiveName HEAD
