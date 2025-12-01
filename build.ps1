@@ -19,6 +19,7 @@ Write-Host "Construction de la version $version..." -ForegroundColor Green
 
 # 1. Vérification Ruff
 Write-Host "Verification du code avec Ruff..." -ForegroundColor Yellow
+
 python -m pipenv run python -m ruff check .
 if ($LASTEXITCODE -ne 0) {
     Write-Error "Le code ne passe pas la verification Ruff. Corrigez les erreurs avant de build."
