@@ -35,3 +35,4 @@ Thumbs.db
 
 # Fichiers de données de test (à garder sous contrôle)
 !dataset.json
+.coverage
