@@ -1,76 +1,194 @@
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List - Gestion des tâches</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        /* Styles améliorés pour l'accessibilité WCAG */
+        body{
+            background-color: #1a6dff; 
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
 
-<style>
+        h1 {
+            text-align: center;
+    		color: #000000; 
+            font-size: 3.5rem;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
 
-	body{
-		background-color: #3a86ff;
-	}
+        .center-column{
+            width:600px;
+            margin: 20px auto;
+            padding:30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            color: #333333; 
+        }
 
-	input{
-		width: 100%;
-		padding: 12px 20px;
-		margin: 8px 0;
-		box-sizing: border-box;
-	}
+        input{
+            width: 100%;
+            padding: 12px 20px;
+            margin: 12px 0;
+            box-sizing: border-box;
+            border: 2px solid #4d90fe;
+            border-radius: 4px;
+            font-size: 16px;
+        }
 
-	input::placeholder {
-	  color: #d3d3d3;
-	}
+        input::placeholder {
+            color: #666666; 
+        }
 
-	.submit{
-		background-color: #6BA3E8;
-	}
+        input:focus {
+            outline: 3px solid #4d90fe;
+            outline-offset: 2px;
+        }
 
-	.center-column{
-		width:600px;
-		margin: 20px auto;
-		padding:20px;
-		background-color: #fff;
-		border-radius: 3px;
-		box-shadow: 6px 2px 30px 0px rgba(0,0,0,0.75);
-	}
+		.btn-info {
+			background-color: #0056cc; /* Plus foncé que #007bff */
+			border-color: #004499;
+			color: white;
+			font-weight: bold;
+		}
 
-	.item-row{
-		background-color: #8338ec;
-		margin: 10px;
-		padding: 20px;
-		border-radius: 3px;
-		color: #fff;
-		font-size: 16px;
-		box-shadow: 0px -1px 10px -4px rgba(0,0,0,0.75);
-	}
+        .btn-info:hover, .btn-info:focus {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
 
-	.btn-danger{
-		background-color: #ffbe0b;
-		border-color: #e59400;
-	}
+		.btn-primary {
+			background-color: #0069d9; /* Plus foncé */
+			border-color: #005cbf;
+			color: white;
+			font-weight: bold;
+			padding: 12px 24px;
+			font-size: 18px;
+		}
 
-</style>
-<h1 style="text-align: center; color: #fb5607; font-size: 125px;        text-shadow: -10px 0 black, 0 10px black, 10px 0 black, 0 -10px black;
+		.btn-primary:hover, .btn-primary:focus {
+			background-color: #0056b3;
+			border-color: #004085;
+		}
 
-"><b>TO DO LIST</b></h1>
-<div  class="center-column">
-	<form method="POST" action="/">
-		{% csrf_token %}
-		{{form.title}}
-		<input class="btn btn-info" type="submit" name="Create Task">
-	</form>
+        .btn-danger {
+            background-color: #dc3545; /* Rouge Bootstrap standard */
+            border-color: #c82333;
+            color: white;
+            font-weight: bold;
+        }
 
-	<div class="todo-list">
-	{% for task in tasks %}
-		<div class="item-row">
-			<a class="btn btn-sm btn-info" href = "{% url 'update_task' task.id %}">Update</a>
-			<a class="btn btn-sm btn-danger" href = "{% url 'delete' task.id %}">Delete</a>
-			{% if task.complete == True %}
-			<strike>{{task}}</strike>
-			{% else %}
-			<span>{{task}}</span>
-			{% endif %}
+        .btn-danger:hover, .btn-danger:focus {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
 
-		</div>
-	{% endfor %}
-	</div>
-	<div class="app-version">
-		<p>Version : {{ APP_VERSION }}</p>
-	</div>
-</div>
+        .item-row{
+            background-color: #6f42c1; /* Violet plus clair pour contraste */
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .item-row a {
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        span {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        /* Version app */
+        .app-version {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 2px solid #eeeeee;
+            text-align: center;
+            color: #666666;
+            font-size: 14px;
+        }
+
+        /* Améliorations pour le focus */
+        a:focus, button:focus {
+            outline: 3px solid #ff6b35;
+            outline-offset: 3px;
+        }
+
+        /* Pour réduire les animations si l'utilisateur le préfère */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 650px) {
+            .center-column {
+                width: 95%;
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header role="banner">
+        <h1><b>TO DO LIST</b></h1>
+    </header>
+
+    <main role="main" class="center-column">
+        <form method="POST" action="/">
+            {% csrf_token %}
+			<div class="form-group">
+                <label for="id_title">Nouvelle tâche :</label>
+                {{ form.title }}
+            </div>
+            <input class="btn btn-primary btn-lg btn-block" type="submit" name="Create Task" value="➕ Ajouter une tâche" aria-label="Ajouter une nouvelle tâche">
+        </form>
+
+        <div class="todo-list" role="list" aria-label="Liste des tâches">
+        {% for task in tasks %}
+            <div class="item-row" role="listitem">
+                <a class="btn btn-sm btn-info" href="{% url 'update_task' task.id %}" aria-label="Modifier la tâche '{{ task.title }}'">
+                    ✏️ Modifier
+                </a>
+                <a class="btn btn-sm btn-danger" href="{% url 'delete' task.id %}" aria-label="Supprimer la tâche '{{ task.title }}'">
+                    🗑️ Supprimer
+                </a>
+                
+                {% if task.complete == True %}
+                    <s aria-label="Tâche terminée: {{ task.title }}">{{ task.title }}</s>
+                    <span role="status" aria-hidden="true">✅</span>
+                {% else %}
+                    <span aria-label="Tâche en cours: {{ task.title }}">{{ task.title }}</span>
+                    <span role="status" aria-hidden="true">⏳</span>
+                {% endif %}
+            </div>
+        {% endfor %}
+        </div>
+        
+        <div class="app-version" role="contentinfo">
+            <p>Version : {{ APP_VERSION }}</p>
+        </div>
+    </main>
+</body>
+</html>

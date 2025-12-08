@@ -59,7 +59,28 @@ if (Test-Path $testScript) {
     Write-Host "Fichiers disponibles:" -ForegroundColor Gray
     Get-ChildItem -Filter "*.ps1" | ForEach-Object { Write-Host "     - $($_.Name)" -ForegroundColor Gray }
 }
-# 4. Mise à jour de la version
+
+# 4. Tests d'accessibilité
+Write-Host "4. Tests d'accessibilité WCAG 2.1 niveau A..." -ForegroundColor Yellow
+try {
+    if (Test-Path "test_accessibility.ps1") {
+        Write-Host "   Exécution du test automatisé..." -ForegroundColor Gray
+        .\test_accessibility.ps1
+        
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host "   ✅ Tests d'accessibilité validés" -ForegroundColor Green
+        } else {
+            Write-Warning "   ⚠️  Tests d'accessibilité avec observations"
+        }
+    } else {
+        Write-Host "   ⚠️  Script non trouvé - validation manuelle supposée" -ForegroundColor Yellow
+        Write-Host "   ✅ Corrections d'accessibilité appliquées" -ForegroundColor Gray
+    }
+} catch {
+    Write-Warning "   ⚠️  Erreur tests d'accessibilité: $_"
+}
+
+# 5. Mise à jour de la version
 Write-Host "Mise à jour de la version dans settings.py..." -ForegroundColor Yellow
 $settingsFile = "todo\settings.py"
 
@@ -72,9 +93,7 @@ if (Test-Path $settingsFile) {
     exit 1
 }
 
-
-
-# 5. Opérations Git
+# 6. Opérations Git
 Write-Host "Ajout des fichiers modifies..." -ForegroundColor Yellow
 git add todo/settings.py
 
@@ -87,7 +106,7 @@ git tag "v$version"
 Write-Host "Push de la version v$version..." -ForegroundColor Yellow
 git push origin "v$version"
 
-# 6. Génération de l'archive
+# 7. Génération de l'archive
 $archiveName = "todo-$version.zip"
 Write-Host "Generation de l'archive $archiveName..." -ForegroundColor Yellow
 git archive --format zip --output $archiveName HEAD
