@@ -1,7 +1,204 @@
-<h3>Update task</h3>
-
-<form method="POST" action="">
-	{% csrf_token %}
-	{{ form }}
-	<input type="submit" name="Update Task">
-</form>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier la tâche - Todo List</title>
+    <style>
+        /* Styles d'accessibilité */
+        * {
+            box-sizing: border-box; 
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+            margin: 0;
+        }
+        
+        .update-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+            font-size: 16px;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+        }
+        
+        input[type="text"]:focus {
+            outline: 3px solid #4d90fe;
+            outline-offset: 2px;
+            border-color: #4d90fe;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .checkbox-group label {
+            margin-bottom: 0;
+            cursor: pointer;
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .btn {
+            padding: 14px 28px;
+            min-height: 44px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            width: 100%; 
+            box-sizing: border-box; 
+        }
+        
+        .btn:focus {
+            outline: 3px solid #4d90fe;
+            outline-offset: 2px;
+        }
+        
+        .btn-update {
+            background-color: #218838; 
+            color: white;
+            margin-top: 20px;
+        }
+        
+        .btn-update:hover, .btn-update:focus {
+            background-color: #1e7e34;
+        }
+        
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+            margin-top: 15px;
+        }
+        
+        .btn-back:hover, .btn-back:focus {
+            background-color: #5a6268;
+        }
+        
+        .help-text {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+            display: block;
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .update-container {
+                padding: 20px;
+                margin: 20px;
+            }
+            
+            body {
+                padding: 10px;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .btn {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="update-container" role="main">
+        <h1>✏️ Modifier la tâche</h1>
+        
+        <form method="POST" action="">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_title">Titre de la tâche :</label>
+                <input type="text" 
+                       id="id_title" 
+                       name="title" 
+                       value="{{ form.title.value|default:'' }}"
+                       required
+                       aria-required="true"
+                       aria-describedby="titleHelp">
+                <span id="titleHelp" class="help-text">
+                    Modifiez le titre de votre tâche
+                </span>
+            </div>
+            
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" 
+                           id="id_complete" 
+                           name="complete" 
+                           {% if form.complete.value %}checked{% endif %}
+                           aria-describedby="completeHelp">
+                    <label for="id_complete">
+                        <span>Tâche terminée</span>
+                    </label>
+                </div>
+                <span id="completeHelp" class="help-text">
+                    Cochez cette case si la tâche est terminée
+                </span>
+            </div>
+            
+            <button type="submit" 
+                    class="btn btn-update" 
+                    name="Update Task"
+                    aria-label="Enregistrer les modifications de la tâche">
+                💾 Mettre à jour
+            </button>
+        </form>
+        
+        <a href="{% url 'list' %}" 
+           class="btn btn-back"
+           role="button"
+           aria-label="Retour à la liste des tâches sans enregistrer">
+            ← Retour à la liste
+        </a>
+    </div>
+</body>
+</html>

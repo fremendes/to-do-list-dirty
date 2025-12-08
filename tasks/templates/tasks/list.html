@@ -108,10 +108,6 @@
             font-weight: bold;
         }
 
-        strike {
-            color: #ffffff;
-        }
-
         span {
             color: #ffffff;
             font-weight: 500;
@@ -162,7 +158,10 @@
     <main role="main" class="center-column">
         <form method="POST" action="/">
             {% csrf_token %}
-            {{form.title}}
+			<div class="form-group">
+                <label for="id_title">Nouvelle tâche :</label>
+                {{ form.title }}
+            </div>
             <input class="btn btn-primary btn-lg btn-block" type="submit" name="Create Task" value="➕ Ajouter une tâche" aria-label="Ajouter une nouvelle tâche">
         </form>
 
@@ -177,7 +176,7 @@
                 </a>
                 
                 {% if task.complete == True %}
-                    <strike aria-label="Tâche terminée: {{ task.title }}">{{ task.title }}</strike>
+                    <s aria-label="Tâche terminée: {{ task.title }}">{{ task.title }}</s>
                     <span role="status" aria-hidden="true">✅</span>
                 {% else %}
                     <span aria-label="Tâche en cours: {{ task.title }}">{{ task.title }}</span>
