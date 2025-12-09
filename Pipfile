@@ -9,6 +9,9 @@ django = "*"
 [dev-packages]
 ruff = "*"
 coverage = "*"
+pytest = "*"
+pytest-django = "*"
+pytest-json-report = "*"
 
 [requires]
 python_version = "3.13"

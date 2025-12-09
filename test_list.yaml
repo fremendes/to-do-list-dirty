@@ -1,0 +1,167 @@
+---
+# test_list.yaml
+# Cahier de tests pour l'application To-Do List
+# Version 1.0 - Basé sur les tests Django existants
+
+tests:
+  # ==============================
+  # TESTS D'URLS 
+  # ==============================
+  - id: "TC001"
+    type: "auto"
+    description: "Test que la page d'accueil fonctionne"
+    fonction: "test_home_page_url"
+    classe: "TaskURLTests"
+    categorie: "urls"
+    statut: "implemented"
+    commentaire: ""
+
+  - id: "TC002"
+    type: "auto"
+    description: "Test que l'URL de mise à jour fonctionne"
+    fonction: "test_update_task_url"
+    classe: "TaskURLTests"
+    categorie: "urls"
+    statut: "implemented"
+    commentaire: ""
+
+  - id: "TC003"
+    type: "auto"
+    description: "Test que l'URL de suppression fonctionne"
+    fonction: "test_delete_task_url"
+    classe: "TaskURLTests"
+    categorie: "urls"
+    statut: "implemented"
+    commentaire: ""
+
+  - id: "TC004"
+    type: "auto"
+    description: "Test la mise à jour via POST"
+    fonction: "test_update_task_post"
+    classe: "TaskURLTests"
+    categorie: "urls"
+    statut: "implemented"
+    commentaire: "Vérifie redirection 302 et mise à jour effective"
+
+  - id: "TC005"
+    type: "auto"
+    description: "Test la suppression via POST"
+    fonction: "test_delete_task_post"
+    classe: "TaskURLTests"
+    categorie: "urls"
+    statut: "implemented"
+    commentaire: "Vérifie redirection 302 et suppression effective"
+
+  - id: "TC006"
+    type: "auto"
+    description: "Test la création d'une tâche via POST"
+    fonction: "test_create_task_post"
+    classe: "TaskURLTests"
+    categorie: "urls"
+    statut: "implemented"
+    commentaire: "Vérifie redirection 302 et création effective"
+
+  # ==============================
+  # TESTS DE MODÈLES 
+  # ==============================
+  - id: "TC007"
+    type: "auto"
+    description: "Test la création d'un modèle Task"
+    fonction: "test_task_creation"
+    classe: "TaskModelTests"
+    categorie: "modeles"
+    statut: "implemented"
+    commentaire: ""
+
+  - id: "TC008"
+    type: "auto"
+    description: "Test la représentation en string du modèle"
+    fonction: "test_task_string_representation"
+    classe: "TaskModelTests"
+    categorie: "modeles"
+    statut: "implemented"
+    commentaire: ""
+
+  # ==============================
+  # TESTS MANUELS / VISUELS / FONCTIONNELS
+  # ==============================
+  - id: "TC009"
+    type: "manual"
+    description: "Vérification du responsive design"
+    fonction: ""
+    classe: ""
+    categorie: "ui-ux"
+    statut: "todo"
+    commentaire: "Test visuel sur mobile, tablette, desktop"
+
+  - id: "TC010"
+    type: "manual"
+    description: "Navigation au clavier (accessibilité)"
+    fonction: ""
+    classe: ""
+    categorie: "accessibilite"
+    statut: "todo"
+    commentaire: "Tabulation, touches entrée/escape"
+
+  - id: "TC011"
+    type: "manual"
+    description: "Tests d'accessibilité WCAG 2.1 niveau A"
+    fonction: ""
+    classe: ""
+    categorie: "accessibilite"
+    statut: "implemented"
+    commentaire: "Déjà automatisé dans le build (test_accessibility.ps1)"
+
+  - id: "TC012"
+    type: "manual"
+    description: "Temps de chargement de la page d'accueil"
+    fonction: ""
+    classe: ""
+    categorie: "performance"
+    statut: "todo"
+    commentaire: "< 3 secondes, à mesurer avec DevTools"
+
+  # ==============================
+  # TESTS DE COUVERTURE ET QUALITÉ
+  # ==============================
+  - id: "TC013"
+    type: "manual"
+    description: "Couverture de test à 100%"
+    fonction: ""
+    classe: ""
+    categorie: "qualite"
+    statut: "implemented"
+    commentaire: "Vérifié par coverage.py dans le build"
+
+  - id: "TC014"
+    type: "manual"
+    description: "Validation du code par Ruff"
+    fonction: ""
+    classe: ""
+    categorie: "qualite"
+    statut: "implemented"
+    commentaire: "Vérifié dans le build.ps1 (étape 1)"
+
+  # ==============================
+  # TESTS MULTI-VERSIONS
+  # ==============================
+  - id: "TC015"
+    type: "manual"
+    description: "Tests multi-versions Python/Django"
+    fonction: ""
+    classe: ""
+    categorie: "compatibilite"
+    statut: "implemented"
+    commentaire: "Exécuté par test_multi_version.ps1 dans le build"
+
+  # ==============================
+  # TESTS END-TO-END FUTURS
+  # ==============================
+  - id: "TC016"
+    type: "auto-selenium"
+    description: "Workflow complet : connexion, création, suppression tâches"
+    fonction: ""
+    classe: ""
+    categorie: "e2e"
+    statut: "todo"
+    commentaire: "À implémenter avec Selenium (Partie 2 du TP)"
