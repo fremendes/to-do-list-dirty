@@ -110,7 +110,7 @@ def get_test_status(test, results_data, selenium_data=None):
 
         # Chercher le test dans les résultats Selenium
         for result_test in selenium_data.get('tests', []):
-            if result_test.get('test_id') == test_id:  
+            if result_test.get('test_id') == test_id:
                 status = result_test.get('status')
                 if status == 'passed':
                     return '✅', 'Passed', 'passed'
@@ -161,13 +161,15 @@ def print_test_report(tests, results_data, selenium_data=None):
     if results_data:
         print("OK")
     else:
-        print("⚠️  Fichier non trouvé ou invalide - tous les tests auto seront marqués 'Not found'")
+        print("⚠️  Fichier non trouvé ou invalide - " \
+        "tous les tests auto seront marqués 'Not found'")
 
     print("Lecture des tests Selenium via result_test_selenium.json…")
     if selenium_data:
         print("OK\n")
     else:
-        print("⚠️  Fichier non trouvé ou invalide - tous les tests Selenium seront marqués 'Not found'\n")
+        print("⚠️  Fichier non trouvé ou invalide - " \
+              "tous les tests Selenium seront marqués 'Not found'\n")
 
     # Statistiques
     stats = {
@@ -182,7 +184,8 @@ def print_test_report(tests, results_data, selenium_data=None):
 
     # Afficher chaque test
     for test in tests:
-        emoji, status_text, status_key = get_test_status(test, results_data, selenium_data=None)
+        emoji, status_text, status_key = get_test_status(
+            test, results_data, selenium_data=None)
         test_id = test['id']
         test_type = test['type']
 

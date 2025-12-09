@@ -52,7 +52,8 @@ class JSONTestResult(unittest.TextTestResult):
             'test_name': f"{test.__class__.__name__}.{test._testMethodName}",
             'status': status,
             'error_message': error_message,
-            'description': test_method.__doc__.strip() if test_method and test_method.__doc__ else None
+            'description': test_method.__doc__.strip()
+            if test_method and test_method.__doc__ else None
         })
 
 
@@ -101,10 +102,14 @@ class JSONTestRunner(DiscoverRunner):
             'duration': round(self.end_time - self.start_time, 3),
             'total_tests': len(result.test_results),
             'summary': {
-                'passed': sum(1 for t in result.test_results if t['status'] == 'passed'),
-                'failed': sum(1 for t in result.test_results if t['status'] == 'failed'),
-                'errors': sum(1 for t in result.test_results if t['status'] == 'error'),
-                'skipped': sum(1 for t in result.test_results if t['status'] == 'skipped')
+                'passed': sum(1
+                    for t in result.test_results if t['status'] == 'passed'),
+                'failed': sum(1
+                    for t in result.test_results if t['status'] == 'failed'),
+                'errors': sum(1
+                    for t in result.test_results if t['status'] == 'error'),
+                'skipped': sum(1
+                    for t in result.test_results if t['status'] == 'skipped')
             },
             'tests': result.test_results
         }

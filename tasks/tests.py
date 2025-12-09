@@ -7,7 +7,7 @@ from tasks.models import Task
 def tc(test_id):
     """Décorateur pour ajouter un ID de test"""
     def decorator(test_func):
-        test_func.test_number = test_id  
+        test_func.test_number = test_id
         return test_func
     return decorator
 
