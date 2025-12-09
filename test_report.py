@@ -62,25 +62,25 @@ def load_test_results(json_path='result_test_auto.json'):
         return None
 
 
-# def load_selenium_results(json_path='result_test_selenium.json'):
-#     """
-#     Charge les résultats des tests Selenium depuis le fichier JSON.
+def load_selenium_results(json_path='result_test_selenium.json'):
+    """
+    Charge les résultats des tests Selenium depuis le fichier JSON.
 
-#     Args:
-#         json_path: Chemin vers le fichier JSON
+    Args:
+        json_path: Chemin vers le fichier JSON
 
-#     Returns:
-#         Dictionnaire des résultats, ou None si le fichier n'existe pas
-#     """
-#     if not Path(json_path).exists():
-#         return None
+    Returns:
+        Dictionnaire des résultats, ou None si le fichier n'existe pas
+    """
+    if not Path(json_path).exists():
+        return None
 
-#     try:
-#         with open(json_path, encoding='utf-8') as f:
-#             return json.load(f)
-#     except json.JSONDecodeError as e:
-#         print(f"⚠️  Avertissement: Erreur lors de la lecture du JSON Selenium: {e}")
-#         return None
+    try:
+        with open(json_path, encoding='utf-8') as f:
+            return json.load(f)
+    except json.JSONDecodeError as e:
+        print(f"⚠️  Avertissement: Erreur lors de la lecture du JSON Selenium: {e}")
+        return None
 
 
 def get_test_status(test, results_data, selenium_data=None):
