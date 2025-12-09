@@ -30,7 +30,7 @@ Write-Host "Code verifie avec succes par Ruff" -ForegroundColor Green
 # 2. Tests unitaires
 Write-Host "Execution des tests unitaires..." -ForegroundColor Yellow
 
-python -m pipenv run python manage.py test tasks
+python -m pipenv run python manage.py test tasks.tests --testrunner=tests.json_test_runner.JSONTestRunner
 if ($LASTEXITCODE -ne 0) {
     Write-Error "Les tests unitaires ont echoue."
     exit 1
