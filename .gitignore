@@ -37,3 +37,4 @@ Thumbs.db
 !dataset.json
 .coverage
 result_test_auto.json
+result_test_selenium.json

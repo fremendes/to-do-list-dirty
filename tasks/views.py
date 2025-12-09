@@ -42,5 +42,5 @@ def deleteTask(request, pk):
         item.delete()
         return redirect("/")
 
-    context = {"item": item}
+    context = {"item": item.title, 'task_id': item.id}
     return render(request, "tasks/delete.html", context)

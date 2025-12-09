@@ -12,6 +12,8 @@ coverage = "*"
 pytest = "*"
 pytest-django = "*"
 pytest-json-report = "*"
+selenium = "*"
+webdriver-manager = "*"
 
 [requires]
 python_version = "3.13"

@@ -155,13 +155,22 @@ tests:
     commentaire: "Exécuté par test_multi_version.ps1 dans le build"
 
   # ==============================
-  # TESTS END-TO-END FUTURS
+  # TESTS SELENIUM E2E
   # ==============================
   - id: "TC016"
     type: "auto-selenium"
-    description: "Workflow complet : connexion, création, suppression tâches"
-    fonction: ""
-    classe: ""
+    description: "Workflow complet : création et suppression de tâches"
+    fonction: "test_workflow_complet"
+    classe: "TodoListSeleniumTest"
     categorie: "e2e"
-    statut: "todo"
-    commentaire: "À implémenter avec Selenium (Partie 2 du TP)"
+    statut: "implemented"
+    commentaire: "Exercice 8-9"
+
+  - id: "TC017"
+    type: "auto-selenium"
+    description: "Ajout et suppression ciblée de tâches"
+    fonction: "test_ajout_suppression_ciblée"
+    classe: "TodoListSeleniumTest"
+    categorie: "e2e"
+    statut: "implemented"
+    commentaire: "Exercice 12 - Test avancé avec identification d'éléments"

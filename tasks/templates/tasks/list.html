@@ -73,8 +73,8 @@
 
 		.btn-primary:hover, .btn-primary:focus {
 			background-color: #0056b3;
-			border-color: #004085;
-		}
+            border-color: #004085;
+        }
 
         .btn-danger {
             background-color: #dc3545; /* Rouge Bootstrap standard */
@@ -167,7 +167,11 @@
 
         <div class="todo-list" role="list" aria-label="Liste des tâches">
         {% for task in tasks %}
-            <div class="item-row" role="listitem">
+            <div class="item-row" 
+                 role="listitem"
+                 data-task-id="{{ task.id }}"
+                 data-task-title="{{ task.title }}"
+                 data-task-complete="{{ task.complete|yesno:'true,false' }}">
                 <a class="btn btn-sm btn-info" href="{% url 'update_task' task.id %}" aria-label="Modifier la tâche '{{ task.title }}'">
                     ✏️ Modifier
                 </a>

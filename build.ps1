@@ -27,7 +27,7 @@ if ($LASTEXITCODE -ne 0) {
 }
 Write-Host "Code verifie avec succes par Ruff" -ForegroundColor Green
 
-# 2. Tests unitaires
+# 2. Tests unitaires et Selenium E2E
 Write-Host "Execution des tests unitaires..." -ForegroundColor Yellow
 
 python -m pipenv run python manage.py test tasks.tests --testrunner=tests.json_test_runner.JSONTestRunner
@@ -36,6 +36,34 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 Write-Host "Tests unitaires passes avec succes" -ForegroundColor Green
+
+Write-Host " Execution des tests Selenium E2E..." -ForegroundColor Yellow
+
+$seleniumError = 0
+$seleniumTests = @("tests/e2e/tc016_crud_10_tasks.py", "tests/e2e/tc017_cross_impact.py")
+
+foreach ($test in $seleniumTests) {
+    if (-not (Test-Path $test)) {
+        Write-Host "$test non trouve, skip" -ForegroundColor Yellow
+        continue
+    }
+    
+    Write-Host "  Execution: $(Split-Path $test -Leaf)" -ForegroundColor Gray
+    python -m pipenv run python $test
+    
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Test Selenium echoue" -ForegroundColor Red
+        $seleniumError = 1
+        break
+    }
+}
+
+if ($seleniumError -ne 0) {
+    Write-Error "Tests Selenium echoues. Build arrete."
+    exit 1
+}
+
+Write-Host "Tests Selenium reussis" -ForegroundColor Green
 
 # 3. Tests multi-versions 
 Write-Host "Execution des tests multi-versions..." -ForegroundColor Yellow
